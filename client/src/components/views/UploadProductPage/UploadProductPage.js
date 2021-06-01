@@ -12,10 +12,20 @@ const initialInputs = {
   images: [],
 };
 
+const continents = [
+  { key: 1, value: "Africa" },
+  { key: 2, value: "Europe" },
+  { key: 3, value: "Asia" },
+  { key: 4, value: "North America" },
+  { key: 5, value: "South America" },
+  { key: 6, value: "Australia" },
+  { key: 7, value: "Antarctica" },
+];
+
 export default function UploadProductPage() {
   const [inputs, setInputs] = useState(initialInputs);
-  const { title, description, price } = inputs;
-  const onChange = (e) => {
+  const { title, description, price, continent, images } = inputs;
+  const onInputChange = (e) => {
     const { value, name } = e.target;
     setInputs({
       ...inputs,
@@ -32,23 +42,36 @@ export default function UploadProductPage() {
         <br />
         <br />
         <label>이름</label>
-        <Input name="title" onChange={onChange} value={title} />
+        <Input name="title" onChange={onInputChange} value={title} />
         <br />
         <br />
         <label>설명</label>
-        <TextArea name="description" onChange={onChange} value={description} />
+        <TextArea
+          name="description"
+          onChange={onInputChange}
+          value={description}
+        />
         <br />
         <br />
         <label>가격($)</label>
-        <Input name="price" type="number" onChange={onChange} value={price} />
+        <Input
+          name="price"
+          type="number"
+          onChange={onInputChange}
+          value={price}
+        />
         <br />
         <br />
-        <select>
-          <option></option>
+        <select name="continent" onChange={onInputChange} value={continent}>
+          {continents.map((item) => (
+            <option key={item.key} value={item.key}>
+              {item.value}
+            </option>
+          ))}
         </select>
         <br />
         <br />
-        <Button>확인</Button>
+        <Button type="submit">확인</Button>
       </Form>
     </div>
   );
