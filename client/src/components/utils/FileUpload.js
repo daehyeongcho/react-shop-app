@@ -24,6 +24,10 @@ function FileUpload() {
     });
   };
 
+  const onDelete = (image) => {
+    setImages(images.filter((img) => img !== image));
+  };
+
   return (
     <div style={{ display: "flex", justifyContent: "space-between" }}>
       <Dropzone onDrop={onDrop}>
@@ -55,7 +59,7 @@ function FileUpload() {
         }}
       >
         {images.map((image, index) => (
-          <div key={index}>
+          <div key={index} onClick={() => onDelete(image)}>
             <img
               style={{ minWidth: "300px", width: "300px", height: "240px" }}
               src={`http://localhost:5000/${image}`}
