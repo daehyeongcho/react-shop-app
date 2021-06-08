@@ -3,12 +3,18 @@ import axios from "axios";
 import { Icon, Col, Card, Row, Carousel } from "antd";
 import Meta from "antd/lib/card/Meta";
 import ImageSlider from "../../utils/ImageSlider";
+import CheckBox from "./Sections/CheckBox";
+import { continentsData } from "./Sections/Data";
 
 function LandingPage() {
   const [products, setProducts] = useState([]);
   const [skip, setSkip] = useState(0);
   const [limit, setLimit] = useState(8);
   const [postSize, setPostSize] = useState(0);
+  const [filters, setFilters] = useState({
+    continents: [],
+    price: [],
+  });
 
   const getProducts = (body) => {
     axios.post("/api/product/products", body).then((response) => {
@@ -54,6 +60,23 @@ function LandingPage() {
     );
   });
 
+  const showFilteredResults = (newFilters) => {
+    const body = {
+      skip: 0,
+      limit,
+      filters: newFilters,
+    };
+    getProducts(body);
+    setSkip(0);
+  };
+
+  const handleFilters = (filter, category) => {
+    const newFilters = { ...filters };
+    newFilters[category] = filter;
+
+    showFilteredResults(newFilters);
+  };
+
   return (
     <>
       <div style={{ width: "75%", margin: "3rem auto" }}>
@@ -64,6 +87,14 @@ function LandingPage() {
         </div>
 
         {/* Filter */}
+
+        {/* CheckBox */}
+        <CheckBox
+          list={continentsData}
+          handleFilters={(filter) => handleFilters(filter, "continents")}
+        />
+
+        {/* RadioBox */}
 
         {/* Search */}
 

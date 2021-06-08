@@ -10,11 +10,11 @@ const initialInputs = {
   title: "",
   description: "",
   price: 0,
-  continent: 1,
+  continents: 1,
   images: [],
 };
 
-const continents = [
+const continentsData = [
   { key: 1, value: "Africa" },
   { key: 2, value: "Europe" },
   { key: 3, value: "Asia" },
@@ -26,7 +26,8 @@ const continents = [
 
 export default function UploadProductPage(props) {
   const [inputs, setInputs] = useState(initialInputs);
-  const { title, description, price, continent, images } = inputs;
+  const { title, description, price, continents, images } = inputs;
+
   const onInputChange = (e) => {
     const { value, name } = e.target;
     setInputs({
@@ -34,9 +35,11 @@ export default function UploadProductPage(props) {
       [name]: value,
     });
   };
+
   const updateImages = (newImages) => {
     setInputs({ ...inputs, images: newImages });
   };
+
   const onSubmit = (e) => {
     e.preventDefault();
     const hasNull = Object.keys(inputs).reduce((acc, name) => {
@@ -98,8 +101,8 @@ export default function UploadProductPage(props) {
         />
         <br />
         <br />
-        <select name="continent" onChange={onInputChange} value={continent}>
-          {continents.map((item) => (
+        <select name="continents" onChange={onInputChange} value={continents}>
+          {continentsData.map((item) => (
             <option key={item.key} value={item.key}>
               {item.value}
             </option>
