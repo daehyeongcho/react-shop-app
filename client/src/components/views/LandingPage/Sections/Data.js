@@ -1,11 +1,11 @@
 const continentsData = [
-  { key: 1, value: "Africa" },
-  { key: 2, value: "Europe" },
-  { key: 3, value: "Asia" },
-  { key: 4, value: "North America" },
-  { key: 5, value: "South America" },
-  { key: 6, value: "Australia" },
-  { key: 7, value: "Antarctica" },
+  { _id: 0, name: "Africa" },
+  { _id: 1, name: "Europe" },
+  { _id: 2, name: "Asia" },
+  { _id: 3, name: "North America" },
+  { _id: 4, name: "South America" },
+  { _id: 5, name: "Australia" },
+  { _id: 6, name: "Antarctica" },
 ];
 
 export { continentsData };

@@ -6,14 +6,14 @@ const { Panel } = Collapse;
 function CheckBox({ list, handleFilters }) {
   const [checked, setChecked] = useState([]);
 
-  const onToggle = (key) => {
+  const onToggle = (_id) => {
     // 누른 것의 Index를 구하고
-    const currentIndex = checked.indexOf(key);
+    const currentIndex = checked.indexOf(_id);
     const newChecked = [...checked];
 
     if (currentIndex === -1) {
       // 체크 안되어 있었다면 checked에 추가
-      newChecked.push(key);
+      newChecked.push(_id);
     } else {
       // 체크 되어 있었다면 checekd에서 제거
       newChecked.splice(currentIndex, 1);
@@ -26,11 +26,11 @@ function CheckBox({ list, handleFilters }) {
     list &&
     list.map((item) => (
       <Checkbox
-        key={item.key}
-        onChange={() => onToggle(item.key)}
-        checked={checked.indexOf(item.key) !== -1}
+        key={item._id}
+        onChange={() => onToggle(item._id)}
+        checked={checked.indexOf(item._id) !== -1}
       >
-        {item.value}
+        {item.name}
       </Checkbox>
     ));
 
