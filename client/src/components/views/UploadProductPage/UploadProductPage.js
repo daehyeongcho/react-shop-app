@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Typography, Button, Form, Input } from "antd";
 import FileUpload from "../../utils/FileUpload";
 import Axios from "axios";
+import { continentsData } from "../LandingPage/Sections/Data";
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -13,16 +14,6 @@ const initialInputs = {
   continents: 1,
   images: [],
 };
-
-const continentsData = [
-  { key: 1, value: "Africa" },
-  { key: 2, value: "Europe" },
-  { key: 3, value: "Asia" },
-  { key: 4, value: "North America" },
-  { key: 5, value: "South America" },
-  { key: 6, value: "Australia" },
-  { key: 7, value: "Antarctica" },
-];
 
 export default function UploadProductPage(props) {
   const [inputs, setInputs] = useState(initialInputs);
