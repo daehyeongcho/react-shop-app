@@ -4,7 +4,8 @@ import { Icon, Col, Card, Row, Carousel } from "antd";
 import Meta from "antd/lib/card/Meta";
 import ImageSlider from "../../utils/ImageSlider";
 import CheckBox from "./Sections/CheckBox";
-import { continentsData } from "./Sections/Data";
+import RadioBox from "./Sections/RadioBox";
+import { continentsData, priceData } from "./Sections/Data";
 
 function LandingPage() {
   const [products, setProducts] = useState([]);
@@ -50,7 +51,6 @@ function LandingPage() {
   };
 
   const renderCards = products.map((product, index) => {
-    console.log("product:", product);
     return (
       <Col lg={6} md={8} xs={24} key={index}>
         <Card cover={<ImageSlider images={product.images} />}>
@@ -72,9 +72,19 @@ function LandingPage() {
 
   const handleFilters = (filter, category) => {
     const newFilters = { ...filters };
-    newFilters[category] = filter;
+
+    if (category === "price") {
+      // price 범위 array
+      newFilters[category] = priceData[filter].array;
+    } else {
+      // continents, ...
+      newFilters[category] = filter;
+    }
+
+    console.log(newFilters);
 
     showFilteredResults(newFilters);
+    setFilters(newFilters);
   };
 
   return (
@@ -87,14 +97,22 @@ function LandingPage() {
         </div>
 
         {/* Filter */}
-
-        {/* CheckBox */}
-        <CheckBox
-          list={continentsData}
-          handleFilters={(filter) => handleFilters(filter, "continents")}
-        />
-
-        {/* RadioBox */}
+        <Row gutter={[16, 16]}>
+          <Col lg={12} xs={24}>
+            {/* CheckBox */}
+            <CheckBox
+              list={continentsData}
+              handleFilters={(filter) => handleFilters(filter, "continents")}
+            />
+          </Col>
+          <Col lg={12} xs={24}>
+            <RadioBox
+              list={priceData}
+              handleFilters={(filter) => handleFilters(filter, "price")}
+            />
+            {/* RadioBox */}
+          </Col>
+        </Row>
 
         {/* Search */}
 

@@ -50,7 +50,17 @@ router.post("/products", (req, res) => {
 
   for (let key in req.body.filters) {
     if (req.body.filters[key].length > 0) {
-      findArgs[key] = req.body.filters[key];
+      if (key === "price") {
+        // price 범위를 findArgs에 넣어줘야 함
+        findArgs[key] = {
+          // greater than or equal
+          $gte: req.body.filters[key][0],
+          // less than or equal
+          $lte: req.body.filters[key][1],
+        };
+      } else {
+        findArgs[key] = req.body.filters[key];
+      }
     }
   }
 
