@@ -5,6 +5,7 @@ import Meta from "antd/lib/card/Meta";
 import ImageSlider from "../../utils/ImageSlider";
 import CheckBox from "./Sections/CheckBox";
 import RadioBox from "./Sections/RadioBox";
+import SearchFeature from "./Sections/SearchFeature";
 import { continentsData, priceData } from "./Sections/Data";
 
 function LandingPage() {
@@ -16,6 +17,7 @@ function LandingPage() {
     continents: [],
     price: [],
   });
+  const [searchTerm, setSearchTerm] = useState("");
 
   const getProducts = (body) => {
     axios.post("/api/product/products", body).then((response) => {
@@ -87,6 +89,10 @@ function LandingPage() {
     setFilters(newFilters);
   };
 
+  const updateSearchTerm = (newSearchTerm) => {
+    setSearchTerm(newSearchTerm);
+  };
+
   return (
     <>
       <div style={{ width: "75%", margin: "3rem auto" }}>
@@ -115,6 +121,15 @@ function LandingPage() {
         </Row>
 
         {/* Search */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            margin: "1rem",
+          }}
+        >
+          <SearchFeature refreshFunction={updateSearchTerm} />
+        </div>
 
         {/* Card */}
         <Row gutter={[16, 16]}>{renderCards}</Row>
