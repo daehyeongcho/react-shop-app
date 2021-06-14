@@ -47,6 +47,8 @@ function LandingPage() {
       skip: skip + limit,
       limit,
       loadMore: true,
+      filters,
+      searchTerm,
     };
     getProducts(body);
     setSkip(skip + limit);
@@ -67,6 +69,7 @@ function LandingPage() {
       skip: 0,
       limit,
       filters: newFilters,
+      searchTerm,
     };
     getProducts(body);
     setSkip(0);
@@ -90,6 +93,14 @@ function LandingPage() {
   };
 
   const updateSearchTerm = (newSearchTerm) => {
+    const body = {
+      skip: 0,
+      limit,
+      filters,
+      searchTerm: newSearchTerm,
+    };
+    getProducts(body);
+    setSkip(0);
     setSearchTerm(newSearchTerm);
   };
 
