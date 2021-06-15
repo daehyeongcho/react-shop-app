@@ -10,7 +10,7 @@ function ImageSlider({ images }) {
             <div key={index}>
               <img
                 style={{ width: "100%", maxHeight: "150px" }}
-                src={`http://localhost:5000/${img}`}
+                src={`${process.env.REACT_APP_API_URL}/${img}`}
               />
             </div>
           );
