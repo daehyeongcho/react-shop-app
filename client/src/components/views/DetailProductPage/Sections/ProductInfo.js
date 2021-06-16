@@ -1,8 +1,21 @@
 import React from "react";
 import { Descriptions, Button } from "antd";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../../../_actions/user_actions";
 
 function ProductInfo({ detail }) {
-  const onClick = () => {};
+  const dispatch = useDispatch();
+
+  const onClick = () => {
+    // 필요한 정보를 Cart 필드에 넣어준다.
+    dispatch(addToCart(detail._id));
+
+    const body = {
+      id: 0,
+      quantity: 0,
+      date: 0,
+    };
+  };
 
   return (
     <div>
