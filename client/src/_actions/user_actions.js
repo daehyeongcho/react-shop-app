@@ -6,8 +6,9 @@ import {
   LOGOUT_USER,
   ADD_TO_CART,
   GET_CART_ITEMS,
+  REMOVE_CART_ITEM,
 } from "./types";
-import { USER_SERVER } from "../components/Config.js";
+import { USER_SERVER, PRODUCT_SERVER } from "../components/Config.js";
 
 export function registerUser(dataToSubmit) {
   const request = axios
@@ -69,7 +70,7 @@ export function addToCart(productId) {
 
 export function getCartItems(cartItems, userCart) {
   const request = axios
-    .get(`/api/product/products_by_id?id=${cartItems}&type=array`)
+    .get(`${PRODUCT_SERVER}/products_by_id?id=${cartItems}&type=array`)
     .then((response) => {
       // CartItem들에 해당하는 정보들을
       // Product Collection에서 가져온 후에
@@ -88,6 +89,27 @@ export function getCartItems(cartItems, userCart) {
 
   return {
     type: GET_CART_ITEMS,
+    payload: request,
+  };
+}
+
+export function removeCartItem(productId) {
+  const request = axios
+    .get(`${USER_SERVER}/removeFromCart?id=${productId}`)
+    .then((response) => {
+      // productInfo, cart 정보를 조합해서 cartDetail을 만든다.
+      response.data.cart.forEach((cartItem) => {
+        response.data.productInfo.forEach((product, index) => {
+          if (cartItem._id === product._id) {
+            response.data.productInfo[index].quantity = cartItem.quantity;
+          }
+        });
+      });
+
+      return response.data;
+    });
+  return {
+    type: REMOVE_CART_ITEM,
     payload: request,
   };
 }

@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { getCartItems } from "../../../_actions/user_actions";
+import { getCartItems, removeCartItem } from "../../../_actions/user_actions";
 import UserCardBlock from "./Sections/UserCardBlock";
+
+import { Empty } from "antd";
 
 function CartPage({ user }) {
   const dispatch = useDispatch();
   const [total, setTotal] = useState(0);
+  const [showTotal, setShowTotal] = useState(false);
+
   useEffect(() => {
     // 리덕스 user state 안에 cart 안에 상품이 들어있는지 확인
     const cartItems = [];
@@ -22,17 +26,34 @@ function CartPage({ user }) {
             0
           )
         );
+        setShowTotal(true);
       });
     }
   }, [user.userData]);
 
+  const onRemove = (productId) => {
+    dispatch(removeCartItem(productId)).then((response) => {
+      if (response.payload.productInfo.length <= 0) {
+        setShowTotal(false);
+      }
+    });
+  };
+
   return (
     <div style={{ width: "85%", margin: "3rem auto" }}>
       <h1>My Cart</h1>
-      <UserCardBlock products={user.cartDetail} />
-      <div style={{ marginTop: "3rem" }}>
-        <h2>Total Amount: ${total}</h2>
-      </div>
+      <UserCardBlock products={user.cartDetail} onRemove={onRemove} />
+      {showTotal ? (
+        <div style={{ marginTop: "3rem" }}>
+          <h2>Total Amount: ${total}</h2>
+        </div>
+      ) : (
+        <div>
+          <br />
+          <Empty description={false} />
+          <h3>No Items in the Cart</h3>
+        </div>
+      )}
     </div>
   );
 }
