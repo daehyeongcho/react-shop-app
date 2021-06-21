@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getCartItems, removeCartItem } from "../../../_actions/user_actions";
 import UserCardBlock from "./Sections/UserCardBlock";
-
 import { Empty } from "antd";
+import Paypal from "../../utils/Paypal";
 
 function CartPage({ user }) {
   const dispatch = useDispatch();
@@ -54,6 +54,7 @@ function CartPage({ user }) {
           <h3>No Items in the Cart</h3>
         </div>
       )}
+      <Paypal />
     </div>
   );
 }
