@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ProductImage from "./Sections/ProductImage";
 import ProductInfo from "./Sections/ProductInfo";
+import { PRODUCT_SERVER } from "../../Config";
 
 import { Row, Col } from "antd";
 
@@ -12,10 +13,10 @@ function DetailProductPage(props) {
 
   useEffect(() => {
     axios
-      .get(`/api/product/products_by_id?id=${productId}&type=single`)
+      .get(`${PRODUCT_SERVER}/products_by_id?id=${productId}&type=single`)
       .then((response) => {
         console.log(response);
-        setProduct(response.data[0]);
+        setProduct(response.data);
       });
   }, []);
 

@@ -97,20 +97,37 @@ router.get("/products_by_id", (req, res) => {
   // query는 req.query에서 가져옴
   const type = req.query.type;
 
-  let productIds = req.query.id;
   if (type === "array") {
     // id=1234,2345,3456 이거를
     // productIds = ['1234', '2345', '3456'] 이렇게 바꿔줌
-    productIds = req.query.id.split(",");
-  }
+    const productIds = req.query.id.split(",");
 
-  // productIds를 이용해서 DB에서 productIds와 같은 상품의 정보를 가져온다.
-  Product.find({ _id: { $in: productIds } })
-    .populate("writer")
-    .exec((err, product) => {
-      if (err) return res.status(400).send(err);
-      return res.status(200).send(product);
-    });
+    // productIds를 이용해서 DB에서 productIds와 같은 상품의 정보를 가져온다.
+    Product.find({ _id: { $in: productIds } })
+      .populate("writer")
+      .exec((err, product) => {
+        if (err) return res.status(400).send(err);
+        return res.status(200).send(product);
+      });
+  } else {
+    // 하나만 불러오는 경우는 DetailProductPage에서 요청하는 경우이므로
+    // views를 하나 올려줘야 함
+    Product.findOneAndUpdate(
+      { _id: req.query.id },
+      {
+        $inc: {
+          views: 1,
+        },
+      },
+      { new: true }
+    )
+      .populate("writer")
+      .exec((err, product) => {
+        console.log(product);
+        if (err) return res.status(400).send(err);
+        return res.status(200).send(product);
+      });
+  }
 });
 
 module.exports = router;
