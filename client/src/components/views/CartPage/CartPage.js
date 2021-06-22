@@ -44,9 +44,12 @@ function CartPage({ user }) {
       <h1>My Cart</h1>
       <UserCardBlock products={user.cartDetail} onRemove={onRemove} />
       {showTotal ? (
-        <div style={{ marginTop: "3rem" }}>
-          <h2>Total Amount: ${total}</h2>
-        </div>
+        <>
+          <div style={{ marginTop: "3rem" }}>
+            <h2>Total Amount: ${total}</h2>
+          </div>
+          <Paypal total={total} />
+        </>
       ) : (
         <div>
           <br />
@@ -54,7 +57,6 @@ function CartPage({ user }) {
           <h3>No Items in the Cart</h3>
         </div>
       )}
-      <Paypal />
     </div>
   );
 }
